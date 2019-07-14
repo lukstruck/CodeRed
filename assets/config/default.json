@@ -1,0 +1,60 @@
+{
+  "version": 1.0,
+  "entities": {
+    "turretMods": [
+      {
+        "name": "Standard Motor",
+        "type": "motor",
+        "turnSpeed": 90,
+        "comment1": "turnSpeed is in degrees / second, might be changed to radians / second"
+      }
+    ],
+    "turretBases": [
+      {
+        "name": "Standard Base",
+        "modificationSlots": [
+          {
+            "modificationTypes": [
+              "weapon", "sensor"
+            ],
+            "location": "front"
+          },
+          {
+            "modificationTypes": [
+              "weapon", "sensor"
+            ],
+            "location": "right"
+          },
+          {
+            "modificationTypes": [
+              "weapon", "sensor"
+            ],
+            "location": "left"
+          },
+          {
+            "modificationTypes": [
+              "motor"
+            ],
+            "location": "inner",
+            "defaultMod": "Standard Motor"
+          }
+        ],
+        "asset": "images/turretBases/standardBase.png"
+      }
+    ],
+    "projectiles": [
+      {
+        "name": "Standard Bullet",
+        "speed": 30,
+        "comment1": "speed in m/s",
+        "asset": "images/projectiles/standardBullet.png"
+      }
+    ],
+    "enemies": []
+  },
+  "rounds": [],
+  "waves": [],
+  "mapInfo": {
+
+  }
+}

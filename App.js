@@ -1,19 +1,46 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {StyleSheet, StatusBar, View, Text} from 'react-native';
+import {EM} from "./engine/EntityManager";
+import {GameEngine} from "react-native-game-engine";
+import MoveEntities from "./engine/Engines";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+    let bgColor = '#fff4b0';
+    return (
+        <View
+            style={styles.container}>
+
+            <GameEngine
+                style={[styles.engine, {backgroundColor: bgColor}]}
+                systems={[MoveEntities]}
+                entities={EM.getEntities()}
+                >
+
+                <StatusBar hidden={true}/>
+
+            </GameEngine>
+
+            <View
+                style={styles.menu}>
+                <Text>Menu</Text>
+            </View>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+    },
+    engine: {
+        height: '70%',
+        width: '100%'
+    },
+    menu: {
+        height: '30%',
+        width: '100%',
+        backgroundColor: '#0000ff',
+        zIndex: 100,
+    }
 });
