@@ -10,7 +10,6 @@ export default class EntityManager {
             type: 'turret', // debug only
             position: new Vector(4, 4),
             direction: new Vector(-1, 0).normalize(),
-            turnSpeed: 90, // degrees per second, might be changed to radians per second
             mods: [],
             renderer: <Turret />
             },
