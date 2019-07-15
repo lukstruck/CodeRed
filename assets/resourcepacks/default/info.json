@@ -1,0 +1,175 @@
+{
+  "version": 1.0,
+  "name": "Standard",
+  "comment1": "If you create your own resource packs, make all the names unique as they act as identifiers.",
+  "entities": {
+    "turretBases": [
+      {
+        "name": "Standard Base",
+        "size": [
+          1,
+          1
+        ],
+        "comment1": "size in m * m",
+        "modificationSlots": [
+          {
+            "modificationTypes": [
+              "weapon",
+              "sensor"
+            ],
+            "name": "front",
+            "location": [
+              0.5,
+              0.2
+            ],
+            "size": [
+              0.1,
+              0.1
+            ],
+            "comment1": "location and size in m * m. Location is relative to the top left of the base."
+          },
+          {
+            "modificationTypes": [
+              "weapon",
+              "sensor"
+            ],
+            "name": "right",
+            "location": [
+              0.8,
+              0.5
+            ],
+            "size": [
+              0.1,
+              0.1
+            ]
+          },
+          {
+            "modificationTypes": [
+              "weapon",
+              "sensor"
+            ],
+            "name": "left",
+            "location": [
+              0.2,
+              0.5
+            ],
+            "size": [
+              0.1,
+              0.1
+            ]
+          },
+          {
+            "modificationTypes": [
+              "motor"
+            ],
+            "name": "inner",
+            "location": "hidden",
+            "comment1": "if the mod is hidden / inside, set location to hidden",
+            "defaultMod": "Standard Motor"
+          }
+        ],
+        "asset": "images/turretBases/standardBase.png"
+      }
+    ],
+    "turretMods": [
+      {
+        "name": "Standard Motor",
+        "type": "motor",
+        "turnSpeed": 90,
+        "comment1": "turnSpeed is in degrees / second, might be changed to radians / second"
+      },
+      {
+        "name": "Pistol",
+        "type": "weapon",
+        "projectiles": [
+          {
+            "name": "Standard Bullet",
+            "damage": 1,
+            "speed": 30,
+            "comment1": "speed in m/s",
+            "angle": 0,
+            "comment2": "angle in degree relative to direction of turret",
+            "distance": 20,
+            "comment3": "lifetime of the bullet in m. After lifetime ran out, the projectile is destroyed"
+          }
+        ],
+        "fireRate": 2,
+        "comment1": "projectiles / second. Fires all projectiles together"
+      }
+    ],
+    "projectiles": [
+      {
+        "name": "Standard Bullet",
+        "assets": {
+          "image": "images/projectiles/standardBullet.png"
+        }
+      }
+    ],
+    "enemies": [
+      {
+        "name": "Zombie",
+        "health": 5,
+        "speed": 2,
+        "comment1": "speed in m/s"
+      }
+    ]
+  },
+  "rounds": [
+    {
+      "name": "Round 1",
+      "waves": [
+        {
+          "name": "Single Zombie"
+        },
+        {
+          "name": "Single Zombie"
+        }
+      ]
+    },
+    {
+      "name": "Round 2",
+      "waves": [
+        {
+          "name": "Single Zombie"
+        },
+        {
+          "name": "Single Zombie"
+        },
+        {
+          "name": "Single Zombie"
+        },
+        {
+          "name": "Single Zombie"
+        }
+      ]
+    }
+  ],
+  "waves": [
+    {
+      "name": "Single Zombie",
+      "enemies": [
+        {
+          "name": "Zombie",
+          "count": 1
+        }
+      ],
+      "startsWith": "previousWave",
+      "delay": 1,
+      "comment1": "delay in seconds before wave is sent"
+    }
+  ],
+  "maps": [
+    {
+      "name": "Bloons nostalgia",
+      "assets": {
+        "image": "images/maps/bloonsNostalgia.png"
+      },
+      "size": [30,40],
+      "comment1": "size im m * m",
+      "path": [
+        [],
+        []
+      ]
+    }
+  ]
+}
