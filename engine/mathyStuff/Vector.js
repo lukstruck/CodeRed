@@ -5,14 +5,18 @@ export default class Vector {
     }
 
     normalize() {
-        let length = Math.sqrt(this.x * this.x + this.y * this.y);
+        let length = this.length();
+        if(length === null)
+            return this;
         this.x = this.x / length;
         this.y = this.y / length;
         return this;
     }
 
     normalized() {
-        let length = Math.sqrt(this.x * this.x + this.y * this.y);
+        let length = this.length();
+        if(length === null)
+            return new Vector(0,0);
         return new Vector(this.x / length, this.y / length);
     }
 
@@ -26,13 +30,32 @@ export default class Vector {
         return this;
     }
 
-    add(vector) {
-        this.x += vector.x;
-        this.y += vector.y;
+    add(by) {
+        this.x += by.x;
+        this.y += by.y;
         return this;
     }
 
-    added(vector){
-        return new Vector(this.x + vector.x, this.y + vector.y);
+    added(by){
+        return new Vector(this.x + by.x, this.y + by.y);
     }
+
+    length(){
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+
+    subtract(by) {
+        this.x -= by.x;
+        this.y -= by.y;
+        return this;
+    }
+
+    subtracted(by){
+        return new Vector(this.x - by.x, this.y - by.y);
+    }
+
+    toString(){
+        return "[" + this.x + "," + this.y + "]";
+    }
+
 }

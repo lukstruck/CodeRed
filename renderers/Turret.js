@@ -9,7 +9,7 @@ export default class Turret extends Entity {
 
     render() {
         return (
-            <View style={[styles.turret, { left: this.x, top: this.y }]} />
+            <View style={[styles.turret, { left: this.props.position.x * this.ratio.x, top: this.props.position.y * this.ratio.y }]} />
         );
     }
 }
@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
         height: HEIGHT,
         width: WIDTH,
         zIndex: 10,
-        position: 'relative',
+        position: 'absolute',
     },
 });
