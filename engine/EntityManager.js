@@ -22,7 +22,7 @@ export default class EntityManager {
             position: new Vector(16, 0),
             direction: new Vector(0,1).normalize(),
             nextPathPoint: 1,
-            speed: 2,
+            speed: 10,
             health: 50,
             renderer: <Zombie />
             },

@@ -1,6 +1,7 @@
 {
   "version": 1.0,
   "name": "Standard",
+  "icon": "images/icon.png",
   "comment1": "If you create your own resource packs, make all the names unique as they act as identifiers.",
   "entities": {
     "turretBases": [
@@ -167,7 +168,7 @@
       "size": [30,40],
       "comment1": "size im m * m",
       "path": [
-        [16, 0],
+        [16, -1],
         [16, 11.5],
         [23.25, 11.5],
         [23.25, 18],
@@ -180,7 +181,8 @@
         [18, 24.5],
         [18, 31.25],
         [26.25, 31.25],
-        [26.25, 22.5]
+        [26.25, 22.5],
+        [31, 22.5]
       ]
     }
   ]

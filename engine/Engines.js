@@ -28,7 +28,8 @@ function move(entity) {
     if(distanceToNextPathPoint < distanceToNewPosition){
         entity.nextPathPoint++;
         if(entity.nextPathPoint >= map.path.length){
-            entity.nextPathPoint = 0;
+            entity.nextPathPoint = 1;
+            oldPosition = entity.position = map.path[0].copy();
         }
         nextPathPoint = map.path[entity.nextPathPoint];
         direction = nextPathPoint.subtracted(oldPosition).normalize();

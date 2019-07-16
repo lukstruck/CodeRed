@@ -58,4 +58,8 @@ export default class Vector {
         return "[" + this.x + "," + this.y + "]";
     }
 
+    copy(){
+        return new Vector(this.x, this.y);
+    }
+
 }
