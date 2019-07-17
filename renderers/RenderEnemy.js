@@ -19,7 +19,7 @@ export default class RenderEnemy extends RenderEntity {
                     top: this.props.position.y * this.ratio.y - HEIGHT / 2,
                     transform: [{rotate: angle + "deg"}]
                 }]}
-                source={require("../assets/resourcepacks/default/images/entities/zombie.png")}/>
+                source={require("../assets/tmp/zombie.png")}/>
         );
     }
 }

@@ -1,9 +1,10 @@
 export default class ResourcePackFetcher {
-    getResourcePack(url) {
+    static getResourcePack(url) {
         return fetch(url)
             .then((response) => {return response.json()})
-            .catch((error) => {
-                console.error(error);
-            });
+    }
+
+    static getImage(url){
+        return fetch(url)
     }
 }

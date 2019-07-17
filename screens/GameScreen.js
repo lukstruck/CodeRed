@@ -75,7 +75,7 @@ export default class GameScreen extends Component {
                 />
 
                 <ImageBackground style={{height: windowWidth * 4 / 3, width: windowWidth, top: 0}}
-                                 source={require("../assets/resourcepacks/default/images/maps/bloonsNostalgia.png")}>
+                                 source={require("../assets/tmp/bloonsNostalgia.png")}>
                     <GameEngine
                         systems={[MoveEntities]}
                         entities={EM.getEntities()}
