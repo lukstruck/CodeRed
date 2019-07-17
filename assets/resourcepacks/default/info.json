@@ -1,5 +1,5 @@
 {
-  "version": 1.0,
+  "version": "1.0",
   "name": "Standard",
   "icon": "images/icon.png",
   "comment1": "If you create your own resource packs, make all the names unique as they act as identifiers.",
@@ -7,10 +7,7 @@
     "turretBases": [
       {
         "name": "Standard Base",
-        "size": [
-          1,
-          1
-        ],
+        "size": [1, 1],
         "comment1": "size in m * m",
         "modificationSlots": [
           {
@@ -69,7 +66,10 @@
             "defaultMod": "Standard Motor"
           }
         ],
-        "asset": "images/turretBases/standardBase.png"
+        "assets": {
+          "image": "images/turretBases/standardBase.png",
+          "icon": "images/turretBases/standardBaseIcon.png"
+        }
       }
     ],
     "turretMods": [
@@ -77,7 +77,10 @@
         "name": "Standard Motor",
         "type": "motor",
         "turnSpeed": 90,
-        "comment1": "turnSpeed is in degrees / second, might be changed to radians / second"
+        "comment1": "turnSpeed is in degrees / second, might be changed to radians / second",
+        "assets": {
+          "icon": "images/turretMods/standardMotorIcon.png"
+        }
       },
       {
         "name": "Pistol",
@@ -85,22 +88,28 @@
         "projectiles": [
           {
             "name": "Standard Bullet",
-            "damage": 1,
-            "speed": 30,
-            "comment1": "speed in m/s",
-            "angle": 0,
-            "comment2": "angle in degree relative to direction of turret",
-            "distance": 20,
-            "comment3": "lifetime of the bullet in m. After lifetime ran out, the projectile is destroyed"
+            "damage": 5,
+            "comment1": "properties of the original entity can be overwritten. Damage has been changed from 1 to 5 in this occasion."
           }
         ],
         "fireRate": 2,
-        "comment1": "projectiles / second. Fires all projectiles together"
+        "comment1": "projectiles / second. Fires all projectiles together",
+        "assets": {
+          "image": "images/turretMods/pistol.png",
+          "icon": "images/turretMods/pistolIcon.png"
+        }
       }
     ],
     "projectiles": [
       {
         "name": "Standard Bullet",
+        "damage": 1,
+        "speed": 30,
+        "comment1": "speed in m/s",
+        "angle": 0,
+        "comment2": "angle in degree relative to direction of turret, might be changed to direction of modification",
+        "distance": 20,
+        "comment3": "lifetime of the bullet in m. After lifetime ran out, the projectile is destroyed",
         "assets": {
           "image": "images/projectiles/standardBullet.png"
         }
@@ -111,7 +120,18 @@
         "name": "Zombie",
         "health": 5,
         "speed": 2,
-        "comment1": "speed in m/s"
+        "comment1": "speed in m/s",
+        "spawnsOnDeath": [],
+        "actionAtGoal": {
+          "type": "removeLives",
+          "amount": 1,
+          "comment1": "more types will be added, like removeMoney, awardModification.",
+          "comment2": "removeLives / -Money can also have negative values to add them instead of subtract them"
+        },
+        "assets": {
+          "image": "images/enemies/zombie.png",
+          "comment1": "may add icon in future, don't know why yet"
+        }
       }
     ]
   },
@@ -165,7 +185,7 @@
       "assets": {
         "image": "images/maps/bloonsNostalgia.png"
       },
-      "size": [30,40],
+      "size": [30, 40],
       "comment1": "size im m * m",
       "path": [
         [16, -1],

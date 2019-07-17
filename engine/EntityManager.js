@@ -1,21 +1,17 @@
 import React from "react";
-import Turret from "../renderers/Turret";
-import Zombie from "../renderers/Zombie";
+import RenderTurret from "../renderers/RenderTurret";
+import RenderEnemy from "../renderers/RenderEnemy";
 import Vector from "./mathyStuff/Vector";
-import Map from "../renderers/Map";
 
 export default class EntityManager {
 
     entities = {
-        0: {
-            renderer: <Map />
-        },
         1: {
             type: 'turret', // debug only
             position: new Vector(4, 4),
             direction: new Vector(-1, 0).normalize(),
             mods: [],
-            renderer: <Turret />
+            renderer: <RenderTurret />
             },
         2: {
             type: 'zombie', // debug only
@@ -24,7 +20,7 @@ export default class EntityManager {
             nextPathPoint: 1,
             speed: 10,
             health: 50,
-            renderer: <Zombie />
+            renderer: <RenderEnemy />
             },
     };
 

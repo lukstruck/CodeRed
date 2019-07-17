@@ -1,11 +1,11 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import Entity from "./Entity";
+import RenderEntity from "./RenderEntity";
 
 const HEIGHT = 20;
 const WIDTH = 20;
 
-export default class Turret extends Entity {
+export default class RenderTurret extends RenderEntity {
 
     render() {
         return (

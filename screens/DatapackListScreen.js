@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {View, TextInput, Button, ScrollView, FlatList, TouchableOpacity, Text, Image} from "react-native";
 import {NavigationEvents} from "react-navigation";
+import ResourceStorage from "../storage/ResourceStorage";
 
 export default class DatapackListScreen extends Component {
 
@@ -12,19 +13,55 @@ export default class DatapackListScreen extends Component {
         super(props);
         this.state = {
             loaded: false,
+            datapacks: [],
+            bgColor: "white",
         };
     }
 
 
+    componentDidMount() {
+        this.init();
+    }
+
+    init() {
+        this.loadDatapacks().then(() => {
+            this.setState({
+                loaded: true
+            });
+        });
+    }
+
+    loadDatapacks(){
+        return ResourceStorage.getResourcePackList().then((datapackNames) => {
+            console.log("[DatapackListScreen.loadDatapacks] datapacks " + JSON.stringify(datapackNames));
+            return this.setState({datapacks: datapackNames});
+        })
+    }
+
+    addDatapackButtonPressed(){
+
+    }
+
+    deleteDatapack(name: String){
+        return ResourceStorage.removeResourcePack(name).then(() => {
+            console.log("[DatapackListScreen.deleteDatapack] removed " + name);
+            return this.loadDatapacks();
+        });
+    }
+
+    switchTo(name: String){
+        // TODO show datapack structure, that's kinda low prio
+    }
+
     didLoad() {
         let inputText = this.state.fetchURL;
         let inputBgColor = this.state.bgColor;
-        let lists = this.state.lists;
+        let datapacks = this.state.datapacks;
 
         return (
             <View style={styles.container}>
                 <NavigationEvents
-                    onWillFocus={() => this.loadLists()}
+                    onWillFocus={() => this.loadDatapacks()}
                 />
                 <Text style={{alignSelf: 'center', fontSize: 35, fontWeight: 'bold', paddingBottom: 20}}>
                     Datapacks
@@ -43,24 +80,24 @@ export default class DatapackListScreen extends Component {
                     />
                     <Button
                         onPress={() => this.addDatapackButtonPressed()}
-                        title="Add List"
+                        title="Add Datapack"
                     />
                 </View>
                 <ScrollView style={{flex: 4}}>
                     <FlatList
-                        data={lists.map(item => {
+                        data={datapacks.map(item => {
                             return {key: item.name, value: item.icon};
                         })}
                         renderItem={({item}) =>
                             <View style={{flex: 1, flexDirection: "row", justifyContent: "space-between"}}>
                                 <TouchableOpacity style={{width: "70%"}} onPress={() => this.switchTo(item.key)}>
                                     <View style={styles.button}>
-                                        <Text style={styles.buttonText}>... {item.key}</Text>
-                                        <Image progress={item.value} style={{width: 20, height: 20}}/>
+                                        <Text style={styles.buttonText}>{item.key}</Text>
+                                        <Image source={item.value} style={{width: 20, height: 20}}/>
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={{justifyContent: 'center', flexDirection: 'column',}}
-                                                  onPress={() => this.deleteList(item.key)}>
+                                                  onPress={() => this.deleteDatapack(item.key)}>
                                     <View style={styles.button}>
                                         <Text style={[styles.buttonText, styles.delete]}>delete</Text>
                                     </View>
@@ -84,11 +121,11 @@ export default class DatapackListScreen extends Component {
     }
 
     render() {
-        if (this.state.loaded) {
-            this.check();
+        //if (this.state.loaded) {
+        //     this.check();
             return this.didLoad();
-        }
-        return this.loading();
+        // }
+        // return this.loading();
     }
 
 }

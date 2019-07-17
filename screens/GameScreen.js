@@ -7,8 +7,14 @@ import MapHelper from "../renderers/Helper";
 import Vector from "../engine/mathyStuff/Vector";
 import Version from "../storage/Version";
 import Storage from "../storage/Storage";
+import {NavigationEvents} from "react-navigation";
 
 export default class GameScreen extends Component {
+
+    static navigationOptions = {
+        header: null,
+        gesturesEnabled: false,
+    };
 
     componentDidMount(): void {
 
@@ -20,7 +26,10 @@ export default class GameScreen extends Component {
                 Storage.setCurrentUsedVersion(currentVersion);
             }
         })();
+    }
 
+    pauseGame() {
+        // TODO Pause overlay
     }
 
     render() {
@@ -61,10 +70,13 @@ export default class GameScreen extends Component {
             <View
                 style={styles.container}>
 
+                <NavigationEvents
+                    onWillFocus={() => this.pauseGame()}
+                />
+
                 <ImageBackground style={{height: windowWidth * 4 / 3, width: windowWidth, top: 0}}
                                  source={require("../assets/resourcepacks/default/images/maps/bloonsNostalgia.png")}>
                     <GameEngine
-                        style={}
                         systems={[MoveEntities]}
                         entities={EM.getEntities()}
                     >

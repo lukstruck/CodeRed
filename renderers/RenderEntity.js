@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MapHelper from './Helper';
 
-export default class Entity extends Component {
+export default class RenderEntity extends Component {
     constructor(props){
         super(props);
         // get Board size to correctly calculate position
