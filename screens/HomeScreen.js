@@ -20,8 +20,7 @@ export default class App extends React.Component {
         if(json){
             await Promise.all(ResourcePackParser.parseImages(json));
         }
-        console.log("loaded");
-        console.log(json);
+        // Store json in asyncstorage
     }
 
     render() {

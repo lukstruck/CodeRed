@@ -13,7 +13,6 @@ export default class ResourcePackParser {
                     }
                 }
                 if (key === "image" || key === "icon") {
-                    // console.log("fetching " + resourcePackJson[key]);
                     promiseRet.push(ImageFetcher.fetchToBase64(resourcePackJson[key]).then(b64string => {
                         return resourcePackJson[key] = b64string
                     }).catch(() => {

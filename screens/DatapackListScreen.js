@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {View, TextInput, Button, ScrollView, FlatList, TouchableOpacity, Text, Image} from "react-native";
+import {View, TextInput, Button, ScrollView, FlatList, TouchableOpacity, Text, Image, StyleSheet} from "react-native";
 import {NavigationEvents} from "react-navigation";
 import ResourceStorage from "../storage/ResourceStorage";
 
@@ -32,10 +32,11 @@ export default class DatapackListScreen extends Component {
     }
 
     loadDatapacks(){
-        return ResourceStorage.getResourcePackList().then((datapackNames) => {
+        /*return ResourceStorage.getResourcePackList().then((datapackNames) => {
             console.log("[DatapackListScreen.loadDatapacks] datapacks " + JSON.stringify(datapackNames));
             return this.setState({datapacks: datapackNames});
-        })
+        })*/
+        return new Promise(() => {});
     }
 
     addDatapackButtonPressed(){
@@ -129,3 +130,35 @@ export default class DatapackListScreen extends Component {
     }
 
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: 30,
+        padding: 20,
+        flexDirection: "column",
+    },
+    item: {
+        padding: 10,
+        fontSize: 18,
+        height: 44,
+        color: "black",
+    },
+    delete: {
+        color: "red",
+        fontSize: 20,
+
+    },
+    button: {
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        flex: 1,
+    },
+    buttonText: {
+        padding: 5,
+        color: '#007aff',
+        fontSize: 30,
+    }
+});
