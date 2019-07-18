@@ -1,10 +1,6 @@
 import React from 'react';
 import {Image, Text, View, ScrollView, Dimensions, Button, TouchableOpacity} from 'react-native';
 import {AppLoading} from 'expo';
-import ResourcePackFetcher from "../fetcher/ResourcePackFetcher";
-import ResourcePackParser from "../fetcher/ResourcePackParser";
-import ImageFetcher from "../fetcher/ImageFetcher";
-import Base64 from "base-64";
 
 export default class App extends React.Component {
     state = {
@@ -13,14 +9,6 @@ export default class App extends React.Component {
 
     switchTo(screenName) {
         this.props.navigation.navigate(screenName);
-    }
-
-    async componentDidMount(): void {
-        let json = await ResourcePackFetcher.getResourcePack("https://lukstruck.github.io/CodeRed/resourcepacks/default/info.json").catch(() => {return false});
-        if(json){
-            await Promise.all(ResourcePackParser.parseImages(json));
-        }
-        // Store json in asyncstorage
     }
 
     render() {
@@ -43,7 +31,7 @@ export default class App extends React.Component {
             <View style={{flex: 1, justifyContent: 'space-between'}}>
                 <Image source={require("../assets/banner.png")} style={{width: windowWidth, height: bannerHeight}}/>
                 {/*<View>*/}
-                <TouchableOpacity onPress={() => this.switchTo("DatapackList")}>
+                <TouchableOpacity onPress={() => this.switchTo("ResourcepackList")}>
                     <View style={styles.button}>
                         <Text style={styles.buttonText}>Manage Datapacks</Text>
                     </View>

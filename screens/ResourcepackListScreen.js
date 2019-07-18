@@ -3,10 +3,10 @@ import {View, TextInput, Button, ScrollView, FlatList, TouchableOpacity, Text, I
 import {NavigationEvents} from "react-navigation";
 import ResourceStorage from "../storage/ResourceStorage";
 
-export default class DatapackListScreen extends Component {
+export default class ResourcepackListScreen extends Component {
 
     static navigationOptions = {
-        title: 'Datapacks',
+        title: 'Resourcepacks',
     };
 
     constructor(props) {
@@ -33,19 +33,19 @@ export default class DatapackListScreen extends Component {
 
     loadDatapacks(){
         /*return ResourceStorage.getResourcePackList().then((datapackNames) => {
-            console.log("[DatapackListScreen.loadDatapacks] datapacks " + JSON.stringify(datapackNames));
+            console.log("[ResourcepackListScreen.loadDatapacks] datapacks " + JSON.stringify(datapackNames));
             return this.setState({datapacks: datapackNames});
         })*/
         return new Promise(() => {});
     }
 
     addDatapackButtonPressed(){
-
+        this.props.navigation.push("AddResourcePack", {url: this.state.fetchURL});
     }
 
     deleteDatapack(name: String){
         return ResourceStorage.removeResourcePack(name).then(() => {
-            console.log("[DatapackListScreen.deleteDatapack] removed " + name);
+            console.log("[ResourcepackListScreen.deleteDatapack] removed " + name);
             return this.loadDatapacks();
         });
     }
@@ -65,7 +65,7 @@ export default class DatapackListScreen extends Component {
                     onWillFocus={() => this.loadDatapacks()}
                 />
                 <Text style={{alignSelf: 'center', fontSize: 35, fontWeight: 'bold', paddingBottom: 20}}>
-                    Datapacks
+                    Resourcepacks
                 </Text>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 5}}>
                     <TextInput
@@ -81,7 +81,7 @@ export default class DatapackListScreen extends Component {
                     />
                     <Button
                         onPress={() => this.addDatapackButtonPressed()}
-                        title="Add Datapack"
+                        title="Add Resourcepack"
                     />
                 </View>
                 <ScrollView style={{flex: 4}}>

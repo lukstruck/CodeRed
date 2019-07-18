@@ -8,7 +8,6 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "base-64": "^0.1.0",
     "expo": "^33.0.0",
     "mem": "^5.1.1",
     "react": "16.8.3",
