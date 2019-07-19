@@ -3,6 +3,8 @@ import {View, TextInput, Button, ScrollView, FlatList, TouchableOpacity, Text, I
 import {NavigationEvents} from "react-navigation";
 import ResourceStorage from "../storage/ResourceStorage";
 import IconStore from "../storage/IconStore";
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 
 export default class ResourcepackListScreen extends Component {
 
@@ -32,7 +34,7 @@ export default class ResourcepackListScreen extends Component {
         });
     }
 
-    loadDatapacks(){
+    loadDatapacks() {
         return ResourceStorage.getResourcePackList().then(async (datapackNames) => {
             console.log("[ResourcepackListScreen.loadDatapacks] datapacks " + JSON.stringify(datapackNames));
             return await Promise.all(datapackNames.map(name => {
@@ -48,18 +50,18 @@ export default class ResourcepackListScreen extends Component {
         });
     }
 
-    addDatapackButtonPressed(){
+    addDatapackButtonPressed() {
         this.props.navigation.push("AddResourcePack", {url: this.state.fetchURL});
     }
 
-    deleteDatapack(name: String){
+    deleteDatapack(name: String) {
         return ResourceStorage.removeResourcePack(name).then(() => {
             console.log("[ResourcepackListScreen.deleteDatapack] removed " + name);
             return this.loadDatapacks();
         });
     }
 
-    switchTo(name: String){
+    switchTo(name: String) {
         // TODO show datapack structure, that's kinda low prio
     }
 
@@ -73,32 +75,40 @@ export default class ResourcepackListScreen extends Component {
                 <NavigationEvents
                     onWillFocus={() => this.loadDatapacks()}
                 />
-                {/*<Text style={{alignSelf: 'center', fontSize: 35, fontWeight: 'bold', paddingBottom: 20}}>*/}
-                {/*    Resourcepacks*/}
-                {/*</Text>*/}
-                <View style={{flexDirection: 'row', justifyContent: 'flex-end', paddingLeft: 5, flexWrap: 'wrap', paddingBottom: 10}}>
+                <View style={{
+                    paddingLeft: 5,
+                    paddingBottom: 5,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    borderBottomWidth: 2,
+                }}>
                     <TextInput
                         value={inputText}
                         style={{
                             backgroundColor: inputBgColor,
                             borderWidth: 0.5,
-                            width: "100%",
+                            flex: 2,
                             height: 40,
+                            paddingRight: 5,
                         }}
                         placeholder="Type url of info.json"
                         onChangeText={(text) => this.setState({fetchURL: text, bgColor: "white"})}
                         keyboardType="url"
+                        onSubmitEditing={() => this.addDatapackButtonPressed()}
                     />
-                    <Button
+                    <Icon.Button
+                        name="playlist-add"
+                        backgroundColor={'#ffffff'}
+                        color={'#000000'}
                         onPress={() => this.addDatapackButtonPressed()}
-                        title="Add Resourcepack"
-                        style={{padding: 10}}
+                        style={{
+                            padding: 5,
+                        }}
                     />
                 </View>
                 <ScrollView style={{flex: 4}}>
                     <FlatList
                         data={resourcepacks.map(item => {
-                            console.log(item.icon.substring(0, 50));
                             return {key: item.name, value: item.icon};
                         })}
                         renderItem={({item}) =>
@@ -136,7 +146,7 @@ export default class ResourcepackListScreen extends Component {
     render() {
         //if (this.state.loaded) {
         //     this.check();
-            return this.didLoad();
+        return this.didLoad();
         // }
         // return this.loading();
     }
