@@ -71,7 +71,7 @@ export default class GameScreen extends Component {
                 style={styles.container}>
 
                 <NavigationEvents
-                    onWillFocus={() => this.pauseGame()}
+                    onWillUnFocus={() => this.pauseGame()}
                 />
 
                 <ImageBackground style={{height: windowWidth * 4 / 3, width: windowWidth, top: 0}}

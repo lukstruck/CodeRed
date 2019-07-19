@@ -1,4 +1,5 @@
 import ImageFetcher from "./ImageFetcher";
+import IconStore from "../storage/IconStore";
 
 export default class ResourcePackParser {
     static parseImages(resourcePackJson, fetchedImage: (key, value) => void) {
@@ -20,12 +21,12 @@ export default class ResourcePackParser {
                         return null;
                     }).then(b64string => {
                         fetchedImage(resourcePackJson[key], b64string);
-                        return resourcePackJson[key] = b64string
+                        IconStore.setIconToBeStored(resourcePackJson[key], b64string);
+                        return resourcePackJson[key]
                     }));
                 }
             }
         }
-        // console.log(promiseRet);
         return promiseRet;
     }
 }

@@ -13,6 +13,10 @@ import {
 } from "react-native";
 import ResourcePackFetcher from "../fetcher/ResourcePackFetcher";
 import ResourcePackParser from "../fetcher/ResourcePackParser";
+import Resourcepack from "../resourcePackStructure/Resourcepack";
+import IconStore from "../storage/IconStore";
+import {NavigationEvents} from "react-navigation";
+import ResourceStorage from "../storage/ResourceStorage";
 
 
 export default class AddResourcePackScreen extends Component {
@@ -20,18 +24,22 @@ export default class AddResourcePackScreen extends Component {
     state = {
         errors: [],
         images: [],
-        loadedImages: false
+        loadedImages: false,
+        addedResourcepack: false,
     };
+
+    resourcepack = undefined;
 
 
     async componentDidMount(): void {
         this.windowWidth = Dimensions.get('window').width;
         let url = this.props.navigation.getParam('url');
-        let json = await ResourcePackFetcher.getResourcePack(url).catch(() => {
+        let json = await ResourcePackFetcher.getResourcePack(url).catch((err) => {
             alert("url not valid json");
+            console.log(err);
         });
         if (json) {
-            await Promise.all(ResourcePackParser.parseImages(json, (key, value) => {
+            await Promise.all(ResourcePackParser.parseImages(json, (key: String, value: String) => {
                 if (value.substring(0, 10) === "data:text/") { // 404 Error
                     let errors = this.state.errors;
                     errors.push({key: "could not fetch " + key});
@@ -42,13 +50,26 @@ export default class AddResourcePackScreen extends Component {
                     this.setState({images: images});
                 }
             }));
+            this.resourcepack = new Resourcepack(json);
+            this.setState({loadedImages: true});
         }
-        this.setState({loadedImages: true});
-        // Store json in asyncstorage
     }
 
-    canAddResourcepack(){
-        return this.loaded && this.state.errors.length === 0;
+    canAddResourcepack() {
+        return this.state.loadedImages && this.state.errors.length === 0 && !this.state.addedResourcepack;
+    }
+
+
+    addResourcepackClicked() {
+        IconStore.saveIconsToBeStored().then(numIconsStored => {
+            console.log("saved " + numIconsStored + " icons");
+        }).then(() => {
+            return ResourceStorage.addResourcePack(this.resourcepack);
+        }).then(result => {
+            console.log(result);
+            this.setState({addedResourcepack: true});
+            alert("Successfully added Resourcepack!");
+        });
     }
 
     render() {
@@ -57,6 +78,9 @@ export default class AddResourcePackScreen extends Component {
 
         return (
             <View style={{flex: 1}}>
+                <NavigationEvents
+                    onWillUnFocus={() => IconStore.clearIconsToBeStored()}
+                />
                 <FlatList
                     data={this.state.images}
                     renderItem={(item) => { // item.item for whatever reason
@@ -72,10 +96,16 @@ export default class AddResourcePackScreen extends Component {
 
                 <FlatList
                     data={this.state.errors}
-                    renderItem={(item) => <Text style={{paddingLeft: 10, paddingRight: 10, paddingBottom: 5, color: 'red'}}>{item.item.key}</Text>}
+                    renderItem={(item) => <Text style={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                        paddingBottom: 5,
+                        color: 'red'
+                    }}>{item.item.key}</Text>}
                     style={{height: "30%"}}
                 />
-                <TouchableOpacity style={{alignContent: 'center'}} disabled={!addButtonEnabled}>
+                <TouchableOpacity style={{alignContent: 'center'}} disabled={!addButtonEnabled}
+                                  onPress={() => this.addResourcepackClicked()}>
                     <View style={styles.button}>
                         <Text style={[styles.buttonText, {color: buttonColor}]}>Add Resourcepack</Text>
                     </View>
@@ -83,6 +113,7 @@ export default class AddResourcePackScreen extends Component {
             </View>
         );
     }
+
 }
 
 

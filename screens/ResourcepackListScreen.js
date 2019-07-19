@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {View, TextInput, Button, ScrollView, FlatList, TouchableOpacity, Text, Image, StyleSheet} from "react-native";
 import {NavigationEvents} from "react-navigation";
 import ResourceStorage from "../storage/ResourceStorage";
+import IconStore from "../storage/IconStore";
 
 export default class ResourcepackListScreen extends Component {
 
@@ -13,7 +14,7 @@ export default class ResourcepackListScreen extends Component {
         super(props);
         this.state = {
             loaded: false,
-            datapacks: [],
+            resourcepacks: [],
             bgColor: "white",
         };
     }
@@ -32,11 +33,19 @@ export default class ResourcepackListScreen extends Component {
     }
 
     loadDatapacks(){
-        /*return ResourceStorage.getResourcePackList().then((datapackNames) => {
+        return ResourceStorage.getResourcePackList().then(async (datapackNames) => {
             console.log("[ResourcepackListScreen.loadDatapacks] datapacks " + JSON.stringify(datapackNames));
-            return this.setState({datapacks: datapackNames});
-        })*/
-        return new Promise(() => {});
+            return await Promise.all(datapackNames.map(name => {
+                return ResourceStorage.getResourcePackInfo(name);
+            })).then(async info => {
+                return await Promise.all(info.map(async item => {
+                    item.icon = await IconStore.getIcon(item.icon);
+                    return item;
+                }));
+            }).then(info => {
+                return this.setState({resourcepacks: info});
+            });
+        });
     }
 
     addDatapackButtonPressed(){
@@ -57,23 +66,24 @@ export default class ResourcepackListScreen extends Component {
     didLoad() {
         let inputText = this.state.fetchURL;
         let inputBgColor = this.state.bgColor;
-        let datapacks = this.state.datapacks;
+        let resourcepacks = this.state.resourcepacks;
 
         return (
             <View style={styles.container}>
                 <NavigationEvents
                     onWillFocus={() => this.loadDatapacks()}
                 />
-                <Text style={{alignSelf: 'center', fontSize: 35, fontWeight: 'bold', paddingBottom: 20}}>
-                    Resourcepacks
-                </Text>
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 5}}>
+                {/*<Text style={{alignSelf: 'center', fontSize: 35, fontWeight: 'bold', paddingBottom: 20}}>*/}
+                {/*    Resourcepacks*/}
+                {/*</Text>*/}
+                <View style={{flexDirection: 'row', justifyContent: 'flex-end', paddingLeft: 5, flexWrap: 'wrap', paddingBottom: 10}}>
                     <TextInput
                         value={inputText}
                         style={{
                             backgroundColor: inputBgColor,
                             borderWidth: 0.5,
-                            width: "70%"
+                            width: "100%",
+                            height: 40,
                         }}
                         placeholder="Type url of info.json"
                         onChangeText={(text) => this.setState({fetchURL: text, bgColor: "white"})}
@@ -82,11 +92,13 @@ export default class ResourcepackListScreen extends Component {
                     <Button
                         onPress={() => this.addDatapackButtonPressed()}
                         title="Add Resourcepack"
+                        style={{padding: 10}}
                     />
                 </View>
                 <ScrollView style={{flex: 4}}>
                     <FlatList
-                        data={datapacks.map(item => {
+                        data={resourcepacks.map(item => {
+                            console.log(item.icon.substring(0, 50));
                             return {key: item.name, value: item.icon};
                         })}
                         renderItem={({item}) =>
@@ -94,7 +106,7 @@ export default class ResourcepackListScreen extends Component {
                                 <TouchableOpacity style={{width: "70%"}} onPress={() => this.switchTo(item.key)}>
                                     <View style={styles.button}>
                                         <Text style={styles.buttonText}>{item.key}</Text>
-                                        <Image source={item.value} style={{width: 20, height: 20}}/>
+                                        <Image source={{uri: item.value}} style={{width: 60, height: 60}}/>
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={{justifyContent: 'center', flexDirection: 'column',}}
