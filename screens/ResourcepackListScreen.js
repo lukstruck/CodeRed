@@ -72,12 +72,12 @@ export default class ResourcepackListScreen extends Component {
 
         return (
             <View style={styles.container}>
-                <NavigationEvents
+                <NavigationEvents style={{height: 0}}
                     onWillFocus={() => this.loadDatapacks()}
                 />
                 <View style={{
                     paddingLeft: 5,
-                    paddingBottom: 5,
+                    paddingBottom: 10,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     borderBottomWidth: 2,
@@ -101,9 +101,9 @@ export default class ResourcepackListScreen extends Component {
                         backgroundColor={'#ffffff'}
                         color={'#000000'}
                         onPress={() => this.addDatapackButtonPressed()}
-                        style={{
-                            padding: 5,
-                        }}
+                        size={25}
+                        style={{height: 40}}
+                        iconStyle={{marginRight: 0}}
                     />
                 </View>
                 <ScrollView style={{flex: 4}}>
@@ -157,7 +157,7 @@ export default class ResourcepackListScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 30,
+        paddingTop: 15,
         padding: 20,
         flexDirection: "column",
     },

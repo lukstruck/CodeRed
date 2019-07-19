@@ -36,7 +36,6 @@ export default class AddResourcePackScreen extends Component {
         let url = this.props.navigation.getParam('url');
         let json = await ResourcePackFetcher.getResourcePack(url).catch((err) => {
             alert("url not valid json");
-            console.log(err);
         });
         if (json) {
             await Promise.all(ResourcePackParser.parseImages(json, (key: String, value: String) => {
@@ -78,7 +77,7 @@ export default class AddResourcePackScreen extends Component {
 
         return (
             <View style={{flex: 1}}>
-                <NavigationEvents
+                <NavigationEvents style={{height: 0}}
                     onWillUnFocus={() => IconStore.clearIconsToBeStored()}
                 />
                 <FlatList

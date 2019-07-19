@@ -30,6 +30,7 @@ export default class Storage {
 
     static async load(key: String) {
         let loaded = await this._load(Version.getVersion() + key);
+        if(loaded !== null)
         console.log("[STORAGE.load] loaded " + key + ": " + loaded.substring(0, NUM_OUTPUT_CHARS));
         return JSON.parse(loaded);
     }
