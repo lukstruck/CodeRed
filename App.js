@@ -4,6 +4,7 @@ import HomeScreen from "./screens/HomeScreen";
 import ResourcepackListScreen from "./screens/ResourcepackListScreen";
 import GameScreen from "./screens/GameScreen";
 import AddResourcePackScreen from "./screens/AddResourcePackScreen";
+import MapChooseScreen from "./screens/MapChooseScreen";
 
 const AppNavigator = createStackNavigator({
     Home: {
@@ -17,6 +18,9 @@ const AppNavigator = createStackNavigator({
     },
     AddResourcePack: {
         screen: AddResourcePackScreen
+    },
+    MapChooser: {
+        screen: MapChooseScreen
     }
 }, {
     initialRouteName: 'Home',

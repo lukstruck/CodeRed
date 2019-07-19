@@ -20,10 +20,13 @@ export default class ResourceStorage {
 
     static async addResourcePack(info: ResourcepackInfo) {
         let name = info.name;
-        Storage.store("ResourcePackInfo:" + name, info.toJson());
         let list = await this.getResourcePackList();
-        if (!list.includes(name))
+        if (!list.includes(name)) {
             list.push(name);
+        }else {
+            await this.removeResourcePack(info.name);
+        }
+        Storage.store("ResourcePackInfo:" + name, info.toJson());
         return Promise.all([
             this.setResourcePackList(list),
             this.setResource(name, 'turretBases', info.turretBases),

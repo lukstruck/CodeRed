@@ -36,7 +36,7 @@ export default class App extends React.Component {
                         <Text style={styles.buttonText}>Manage Resourcepacks</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.switchTo("Game")}>
+                <TouchableOpacity onPress={() => this.switchTo("MapChooser")}>
                     <View style={styles.button}>
                         <Text style={styles.buttonText}>Play</Text>
                     </View>
