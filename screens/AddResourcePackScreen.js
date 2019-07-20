@@ -65,7 +65,6 @@ export default class AddResourcePackScreen extends Component {
         }).then(() => {
             return ResourceStorage.addResourcePack(this.resourcepack);
         }).then(result => {
-            console.log(result);
             this.setState({addedResourcepack: true});
             alert("Successfully added Resourcepack!");
         });

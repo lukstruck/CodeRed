@@ -9,7 +9,6 @@ const MoveEntities = (entities, args) => {
 
 
 function isMovable(entity) {
-    // console.log(entity);
     return entity.direction && entity.speed;
 }
 

@@ -19,24 +19,24 @@ export default class ResourceStorage {
     }
 
     static async addResourcePack(info: ResourcepackInfo) {
+        console.log(info);
         let name = info.name;
         let list = await this.getResourcePackList();
         if (!list.includes(name)) {
             list.push(name);
-        }else {
+        } else {
             await this.removeResourcePack(info.name);
         }
-        Storage.store("ResourcePackInfo:" + name, info.toJson());
-        return Promise.all([
-            this.setResourcePackList(list),
-            this.setResource(name, 'turretBases', info.turretBases),
-            this.setResource(name, 'turretMods', info.turretMods),
-            this.setResource(name, 'projectiles', info.projectiles),
-            this.setResource(name, 'enemies', info.enemies),
-            this.setResource(name, 'rounds', info.rounds),
-            this.setResource(name, 'waves', info.waves),
-            this.setResource(name, 'maps', info.maps),
-        ]);
+
+        let promises = [
+            Storage.store("ResourcePackInfo:" + name, info.toJson()),
+            this.setResourcePackList(list)
+        ];
+        Object.values(Resource).forEach(item => {
+            promises.push(this.setResource(name, item, info[item]))
+        });
+
+        return Promise.all(promises);
     }
 
     static async removeResourcePack(name: String) {
@@ -44,17 +44,16 @@ export default class ResourceStorage {
         if (!list.find(item => item === name)) // if item not in list
             return;
         list = list.filter(item => item !== name);
-        return Promise.all([
+
+        let promises = [
             Storage.delete("ResourcepPackInfo:" + name),
             this.setResourcePackList(list),
-            this.deleteResource(name, 'turretBases'),
-            this.deleteResource(name, 'turretMods'),
-            this.deleteResource(name, 'projectiles'),
-            this.deleteResource(name, 'enemies'),
-            this.deleteResource(name, 'rounds'),
-            this.deleteResource(name, 'waves'),
-            this.deleteResource(name, 'maps'),
-        ]);
+        ];
+        Object.values(Resource).forEach(item => {
+            promises.push(this.deleteResource(name, item));
+        });
+
+        return Promise.all(promises);
     }
 
     static setResource(resourcepackName: String, resource: String, turretBases: Array) {
@@ -76,3 +75,14 @@ export default class ResourceStorage {
     }
 
 }
+
+export const Resource = {
+    TURRETBASEs: 'turretBases',
+    TURRETMODS: 'turretMods',
+    PROJECTILES: 'projectiles',
+    ENEMIES: 'enemies',
+    ROUNDS: 'rounds',
+    WAVES: 'waves',
+    MAPS: 'maps',
+    MODES: 'modes',
+};

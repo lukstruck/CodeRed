@@ -10,6 +10,7 @@ export default class ResourcepackInfo {
     rounds: Array;
     waves: Array;
     maps: Array;
+    modes: Array;
 
     /**
      *
@@ -26,6 +27,7 @@ export default class ResourcepackInfo {
         this.rounds = data.rounds;
         this.waves = data.waves;
         this.maps = data.maps;
+        this.modes = data.modes;
     }
 
     toJson() {
@@ -51,7 +53,9 @@ export default class ResourcepackInfo {
         ret.maps = ret.maps.map(item => {
             return {name: this.name + "." + item.name}
         });
-        console.log(ret);
+        ret.modes = ret.modes.map(item => {
+            return {name: this.name + "." + item.name}
+        });
 
         return ret;
     }

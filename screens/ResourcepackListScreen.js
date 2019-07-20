@@ -27,17 +27,17 @@ export default class ResourcepackListScreen extends Component {
     }
 
     init() {
-        this.loadDatapacks().then(() => {
+        this.loadResourcepacks().then(() => {
             this.setState({
                 loaded: true
             });
         });
     }
 
-    loadDatapacks() {
-        return ResourceStorage.getResourcePackList().then(async (datapackNames) => {
-            console.log("[ResourcepackListScreen.loadDatapacks] datapacks " + JSON.stringify(datapackNames));
-            return await Promise.all(datapackNames.map(name => {
+    loadResourcepacks() {
+        return ResourceStorage.getResourcePackList().then(async (resourcepackNames) => {
+            console.log("[ResourcepackListScreen.loadResourcepacks] resourcepacks " + JSON.stringify(resourcepackNames));
+            return await Promise.all(resourcepackNames.map(name => {
                 return ResourceStorage.getResourcePackInfo(name);
             })).then(async info => {
                 return await Promise.all(info.map(async item => {
@@ -50,19 +50,19 @@ export default class ResourcepackListScreen extends Component {
         });
     }
 
-    addDatapackButtonPressed() {
+    addResourcepackButtonPressed() {
         this.props.navigation.push("AddResourcePack", {url: this.state.fetchURL});
     }
 
-    deleteDatapack(name: String) {
+    deleteResourcepack(name: String) {
         return ResourceStorage.removeResourcePack(name).then(() => {
-            console.log("[ResourcepackListScreen.deleteDatapack] removed " + name);
-            return this.loadDatapacks();
+            console.log("[ResourcepackListScreen.deleteResourcepack] removed " + name);
+            return this.loadResourcepacks();
         });
     }
 
     switchTo(name: String) {
-        // TODO show datapack structure, that's kinda low prio
+        // TODO show resourcepack structure, that's kinda low prio
     }
 
     didLoad() {
@@ -73,7 +73,7 @@ export default class ResourcepackListScreen extends Component {
         return (
             <View style={styles.container}>
                 <NavigationEvents style={{height: 0}}
-                    onWillFocus={() => this.loadDatapacks()}
+                    onWillFocus={() => this.loadResourcepacks()}
                 />
                 <View style={{
                     paddingLeft: 5,
@@ -94,13 +94,13 @@ export default class ResourcepackListScreen extends Component {
                         placeholder="Type url of info.json"
                         onChangeText={(text) => this.setState({fetchURL: text, bgColor: "white"})}
                         keyboardType="url"
-                        onSubmitEditing={() => this.addDatapackButtonPressed()}
+                        onSubmitEditing={() => this.addResourcepackButtonPressed()}
                     />
                     <Icon.Button
                         name="playlist-add"
                         backgroundColor={'#ffffff'}
                         color={'#000000'}
-                        onPress={() => this.addDatapackButtonPressed()}
+                        onPress={() => this.addResourcepackButtonPressed()}
                         size={25}
                         style={{height: 40}}
                         iconStyle={{marginRight: 0}}
@@ -120,7 +120,7 @@ export default class ResourcepackListScreen extends Component {
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={{justifyContent: 'center', flexDirection: 'column',}}
-                                                  onPress={() => this.deleteDatapack(item.key)}>
+                                                  onPress={() => this.deleteResourcepack(item.key)}>
                                     <View style={styles.button}>
                                         <Text style={[styles.buttonText, styles.delete]}>delete</Text>
                                     </View>

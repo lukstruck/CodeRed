@@ -16,17 +16,17 @@ import ResourceStorage, {Resource} from "../storage/ResourceStorage";
 import IconStore from "../storage/IconStore";
 
 
-export default class MapChooseScreen extends Component {
+export default class ModeChooseScreen extends Component {
 
     static navigationOptions = {
-        title: 'Choose a map',
+        title: 'Choose a Mode',
     };
 
     constructor(props) {
         super(props);
         this.state = {
             loaded: false,
-            maps: [],
+            modes: [],
         };
     }
 
@@ -36,47 +36,46 @@ export default class MapChooseScreen extends Component {
     }
 
     init() {
-        this.loadMaps().then(() => {
+        this.loadModes().then(() => {
             this.setState({
                 loaded: true
             });
         });
     }
 
-    loadMaps() {
-        return ResourceStorage.getAllResourceType(Resource.MAPS).then(async maps => {
-            return await Promise.all(maps.map(async map => {
-                map.assets.image = await IconStore.getIcon(map.assets.image);
-                map.assets.icon = await IconStore.getIcon(map.assets.icon);
-                return map;
+    loadModes() {
+        return ResourceStorage.getAllResourceType(Resource.MODES).then(async modes => {
+            return await Promise.all(modes.map(async mode => {
+                mode.assets.icon = await IconStore.getIcon(mode.assets.icon);
+                return mode;
             }));
-        }).then(maps => {
-            return this.setState({maps: maps.flat()});
+        }).then(modes => {
+            return this.setState({modes: modes.flat()});
         });
     }
 
-    showGameModes(mapName: String) {
-        this.props.navigation.navigate("ModeChooser", {map: mapName});
+    showGame(mode: String) {
+        this.props.navigation.navigate("Game", {map: this.props.navigation.getParam('map'), mode: mode});
     }
 
     didLoad() {
 
         const windowWidth = Dimensions.get('window').width;
-        let maps = this.state.maps;
+        let modes = this.state.modes;
 
         return (
             <View style={styles.container}>
                 <NavigationEvents style={{height: 0}}
-                                  onWillFocus={() => this.loadMaps()}
+                                  onWillFocus={() => this.loadModes()}
                 />
                 <ScrollView style={{flex: 4}}>
                     <FlatList
-                        data={maps.map(item => {
+                        data={modes.map(item => {
                             return {key: item.name, value: item.assets.icon};
                         })}
                         renderItem={({item}) =>
                             <View style={{flex: 1, flexDirection: "row"}}>
-                                <TouchableOpacity onPress={() => this.showGameModes(item.key)}>
+                                <TouchableOpacity onPress={() => this.showGame(item.key)}>
                                     <View style={styles.button}>
                                         <Image source={{uri: item.value}}
                                                style={{width: windowWidth / 2 - 50, height: windowWidth / 2 - 50}}/>
