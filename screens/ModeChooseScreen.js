@@ -12,8 +12,9 @@ import {
     Dimensions
 } from "react-native";
 import {NavigationEvents} from "react-navigation";
-import ResourceStorage, {Resource} from "../storage/ResourceStorage";
+import ResourceStorage from "../storage/ResourceStorage";
 import IconStore from "../storage/IconStore";
+import {Resource} from "../resourcePackStructure/Resourcepack";
 
 
 export default class ModeChooseScreen extends Component {

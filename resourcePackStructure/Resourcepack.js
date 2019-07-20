@@ -1,3 +1,13 @@
+export const Resource = {
+    TURRETBASEs: 'turretBases',
+    TURRETMODS: 'turretMods',
+    PROJECTILES: 'projectiles',
+    ENEMIES: 'enemies',
+    ROUNDS: 'rounds',
+    WAVES: 'waves',
+    MAPS: 'maps',
+    MODES: 'modes',
+};
 export default class ResourcepackInfo {
 
     name: String;
@@ -32,29 +42,11 @@ export default class ResourcepackInfo {
 
     toJson() {
         let ret = JSON.parse(JSON.stringify(this));
-        ret.turretBases = ret.turretBases.map(item => {
-            return {name: this.name + "." + item.name}
-        });
-        ret.turretMods = ret.turretMods.map(item => {
-            return {name: this.name + "." + item.name}
-        });
-        ret.projectiles = ret.projectiles.map(item => {
-            return {name: this.name + "." + item.name}
-        });
-        ret.enemies = ret.enemies.map(item => {
-            return {name: this.name + "." + item.name}
-        });
-        ret.rounds = ret.rounds.map(item => {
-            return {name: this.name + "." + item.name}
-        });
-        ret.waves = ret.waves.map(item => {
-            return {name: this.name + "." + item.name}
-        });
-        ret.maps = ret.maps.map(item => {
-            return {name: this.name + "." + item.name}
-        });
-        ret.modes = ret.modes.map(item => {
-            return {name: this.name + "." + item.name}
+
+        Object.values(Resource).forEach(type => {
+            ret[type] = ret[type].map(item => {
+                return {name: this.name + "." + item.name}
+            });
         });
 
         return ret;

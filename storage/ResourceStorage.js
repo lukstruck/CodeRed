@@ -1,5 +1,5 @@
 import Storage from './Storage'
-import ResourcepackInfo from "../resourcePackStructure/Resourcepack";
+import ResourcepackInfo, {Resource} from "../resourcePackStructure/Resourcepack";
 
 export default class ResourceStorage {
     static getResourcePackList() {
@@ -76,13 +76,3 @@ export default class ResourceStorage {
 
 }
 
-export const Resource = {
-    TURRETBASEs: 'turretBases',
-    TURRETMODS: 'turretMods',
-    PROJECTILES: 'projectiles',
-    ENEMIES: 'enemies',
-    ROUNDS: 'rounds',
-    WAVES: 'waves',
-    MAPS: 'maps',
-    MODES: 'modes',
-};
