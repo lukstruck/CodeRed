@@ -56,8 +56,8 @@ export default class ResourceStorage {
         return Promise.all(promises);
     }
 
-    static setResource(resourcepackName: String, resource: String, turretBases: Array) {
-        return Storage.store(resourcepackName + "." + resource, turretBases);
+    static setResource(resourcepackName: String, resource: String, data: Array) {
+        return Storage.store(resourcepackName + "." + resource, data);
     }
 
     static async getAllResourceType(resourceName: String) {

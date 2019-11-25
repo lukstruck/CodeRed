@@ -20,6 +20,7 @@ export default class EntityManager {
             nextPathPoint: 1,
             speed: 10,
             health: 50,
+            imageId:'enemy',
             renderer: <RenderEnemy />
             },
     };

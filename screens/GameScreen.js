@@ -11,6 +11,10 @@ import {NavigationEvents} from "react-navigation";
 
 export default class GameScreen extends Component {
 
+    state = {
+        running: false
+    };
+
     static navigationOptions = {
         header: null,
         gesturesEnabled: false,
@@ -25,11 +29,15 @@ export default class GameScreen extends Component {
                 console.log("[app.js] version changed from " + lastVersion + " to " + currentVersion);
                 Storage.setCurrentUsedVersion(currentVersion);
             }
+            this.props.navigation.getParam('mode');
+            this.props.navigation.getParam('map');
+            this.setState({running: true});
         })();
     }
 
     pauseGame() {
         // TODO Pause overlay
+        this.setState({running: false});
     }
 
     render() {
@@ -79,6 +87,7 @@ export default class GameScreen extends Component {
                     <GameEngine
                         systems={[MoveEntities]}
                         entities={EM.getEntities()}
+                        running={this.state.running}
                     >
                         <StatusBar hidden={true}/>
 
